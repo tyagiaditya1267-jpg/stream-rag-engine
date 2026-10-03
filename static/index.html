@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ Streaming Live RAG Engine | Glassmorphism Console</title>
+    <title>Streaming Live RAG Engine | Glassmorphism Console</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/theme.css">
     <style>
         :root {
-            --bg-base: #060913;
-            --glass-bg: rgba(15, 23, 42, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-hover-border: rgba(0, 240, 255, 0.4);
-            --cyan-glow: #00f0ff;
-            --purple-glow: #a855f7;
-            --emerald-glow: #10b981;
-            --amber-glow: #f59e0b;
-            --rose-glow: #f43f5e;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-base: #dff7f5;
+            --bg-2: #dfe7fb;
+            --glass-bg: rgba(247, 244, 234, 0.84);
+            --glass-border: rgba(128, 161, 212, 0.18);
+            --glass-hover-border: rgba(128, 161, 212, 0.28);
+            --cyan-glow: #75C9C8;
+            --blue-glow: #80A1D4;
+            --purple-glow: #C0B9DD;
+            --emerald-glow: #4aa7a2;
+            --amber-glow: #E7C76F;
+            --rose-glow: #d77d8a;
+            --text-main: #24314d;
+            --text-muted: #596d89;
+            --soft-panel: rgba(255, 255, 255, 0.22);
         }
 
         * {
@@ -31,12 +35,12 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-base);
-            background-image: 
-                radial-gradient(at 10% 10%, rgba(0, 240, 255, 0.08) 0px, transparent 50%),
-                radial-gradient(at 90% 10%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
-                radial-gradient(at 50% 90%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
-                radial-gradient(#1e293b 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
+            background-image:
+                radial-gradient(at 15% 15%, rgba(117, 201, 200, 0.18) 0px, transparent 35%),
+                radial-gradient(at 80% 12%, rgba(128, 161, 212, 0.15) 0px, transparent 30%),
+                radial-gradient(at 50% 90%, rgba(192, 185, 221, 0.12) 0px, transparent 28%),
+                linear-gradient(135deg, #DFF7F5 0%, #DDE9F9 48%, #C9D5F1 100%);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -46,18 +50,18 @@
 
         /* Glassmorphism Container */
         .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(18px) saturate(180%);
-            -webkit-backdrop-filter: blur(18px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.35);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(247, 244, 234, 0.82);
+            backdrop-filter: blur(18px) saturate(185%);
+            -webkit-backdrop-filter: blur(18px) saturate(185%);
+            border: 1px solid rgba(128, 161, 212, 0.18);
+            border-radius: 18px;
+            box-shadow: 0 20px 50px rgba(59, 76, 102, 0.12), inset 0 1px 0 rgba(255,255,255,0.45);
+            transition: all 0.28s ease;
         }
 
         .glass-panel:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 14px 40px 0 rgba(0, 0, 0, 0.45);
+            border-color: rgba(128, 161, 212, 0.26);
+            box-shadow: 0 24px 60px rgba(59, 76, 102, 0.16), inset 0 1px 0 rgba(255,255,255,0.5);
         }
 
         /* Top Header HUD */
@@ -73,9 +77,9 @@
 
         .brand-title {
             font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #00f0ff 0%, #a855f7 50%, #ec4899 100%);
+            font-weight: 700;
+            font-size: 1.7rem;
+            background: linear-gradient(135deg, #2d3f5d 0%, #5f7db2 42%, #3a8d8b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
@@ -103,21 +107,21 @@
         }
 
         .badge-online {
-            background: rgba(16, 185, 129, 0.12);
-            border-color: rgba(16, 185, 129, 0.35);
-            color: #34d399;
+            background: rgba(117, 201, 200, 0.18);
+            border-color: rgba(117, 201, 200, 0.35);
+            color: #2b847e;
         }
 
         .badge-version {
-            background: rgba(0, 240, 255, 0.12);
-            border-color: rgba(0, 240, 255, 0.35);
-            color: #38bdf8;
+            background: rgba(128, 161, 212, 0.12);
+            border-color: rgba(128, 161, 212, 0.18);
+            color: #47679d;
         }
 
         .badge-latency {
-            background: rgba(168, 85, 247, 0.12);
-            border-color: rgba(168, 85, 247, 0.35);
-            color: #c084fc;
+            background: rgba(192, 185, 221, 0.22);
+            border-color: rgba(192, 185, 221, 0.28);
+            color: #4f4e77;
         }
 
         .pulse-dot {
@@ -167,22 +171,30 @@
             font-family: 'Outfit', sans-serif;
             font-size: 1.15rem;
             font-weight: 700;
-            color: #f1f5f9;
+            color: #1E293B;
+            letter-spacing: -0.01em;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(128, 161, 212, 0.2);
             padding-bottom: 0.5rem;
+        }
+
+        .secondary-label {
+            color: #475569;
+            font-weight: 600;
         }
 
         /* Controls & Form Elements */
         textarea.glass-input {
             width: 100%;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid var(--glass-border);
+            background: rgba(247, 244, 234, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(192, 185, 221, 0.4);
             border-radius: 12px;
-            color: #f8fafc;
+            color: #1E293B;
             padding: 12px 16px;
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
@@ -193,8 +205,28 @@
         }
 
         textarea.glass-input:focus {
-            border-color: var(--cyan-glow);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+            border-color: #75C9C8;
+            box-shadow: 0 0 0 3px rgba(117, 201, 200, 0.2);
+        }
+
+        textarea.glass-input::placeholder {
+            color: #64748B;
+            opacity: 1;
+        }
+
+        .citations-subheader {
+            color: #475569;
+            font-weight: 600;
+        }
+
+        #intents-container {
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        #intents-container em {
+            color: #64748B;
+            font-style: italic;
         }
 
         .presets-grid {
@@ -206,9 +238,9 @@
         }
 
         .chip {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(128, 161, 212, 0.18);
+            color: #1E293B;
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.78rem;
@@ -218,9 +250,9 @@
         }
 
         .chip:hover {
-            background: rgba(0, 240, 255, 0.15);
-            border-color: var(--cyan-glow);
-            color: var(--cyan-glow);
+            background: rgba(128, 161, 212, 0.12);
+            border-color: rgba(117, 201, 200, 0.5);
+            color: #244a50;
             transform: translateY(-1px);
         }
 
@@ -250,36 +282,36 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #00f0ff, #3b82f6);
-            color: #030712;
-            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3);
+            background: linear-gradient(135deg, var(--cyan-glow), #6bb7c0);
+            color: #153645;
+            box-shadow: 0 12px 24px rgba(117, 201, 200, 0.2);
         }
 
         .btn-primary:hover {
-            box-shadow: 0 6px 28px rgba(0, 240, 255, 0.5);
+            box-shadow: 0 10px 26px rgba(117, 201, 200, 0.28);
             transform: translateY(-2px);
         }
 
         .btn-speech {
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            color: #ffffff;
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+            background: linear-gradient(135deg, var(--blue-glow), #6a8bd1);
+            color: #f8faff;
+            box-shadow: 0 12px 24px rgba(128, 161, 212, 0.2);
         }
 
         .btn-speech:hover {
-            box-shadow: 0 6px 28px rgba(168, 85, 247, 0.5);
+            box-shadow: 0 10px 26px rgba(128, 161, 212, 0.32);
             transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #f1f5f9;
+            background: rgba(128, 161, 212, 0.08);
+            border: 1px solid rgba(128, 161, 212, 0.18);
+            color: var(--text-main);
         }
 
         .btn-secondary:hover {
-            background: rgba(51, 65, 85, 0.9);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(128, 161, 212, 0.12);
+            border-color: rgba(128, 161, 212, 0.22);
             transform: translateY(-2px);
         }
 
@@ -293,8 +325,8 @@
         .gate-card {
             padding: 12px 16px;
             border-radius: 12px;
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(128, 161, 212, 0.14);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -310,7 +342,7 @@
             font-family: 'Fira Code', monospace;
             font-size: 0.85rem;
             font-weight: 700;
-            color: #cbd5e1;
+            color: var(--text-main);
         }
 
         .gate-desc {
@@ -325,8 +357,8 @@
             font-weight: 700;
             padding: 4px 10px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #64748b;
+            background: rgba(128, 161, 212, 0.08);
+            color: var(--text-muted);
         }
 
         /* Active Gate Highlighting */
@@ -373,11 +405,11 @@
         /* Reasoning Card */
         .reason-box {
             padding: 12px 16px;
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(255, 255, 255, 0.22);
             border-left: 3px solid var(--cyan-glow);
             border-radius: 8px;
             font-size: 0.85rem;
-            color: #e2e8f0;
+            color: var(--text-main);
             line-height: 1.4;
         }
 
@@ -394,16 +426,16 @@
             font-size: 0.75rem;
             padding: 4px 10px;
             border-radius: 20px;
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #38bdf8;
+            background: rgba(117, 201, 200, 0.14);
+            border: 1px solid rgba(117, 201, 200, 0.25);
+            color: #0D9488;
         }
 
         .entity-pill.delta-new {
-            background: rgba(16, 185, 129, 0.18);
-            border-color: var(--emerald-glow);
-            color: #34d399;
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+            background: rgba(117, 201, 200, 0.2);
+            border-color: rgba(117, 201, 200, 0.4);
+            color: #059669;
+            box-shadow: 0 0 8px rgba(117, 201, 200, 0.2);
         }
 
         /* Citation Cards */
@@ -417,15 +449,15 @@
         }
 
         .citation-card {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(128, 161, 212, 0.12);
             border-radius: 12px;
             padding: 14px;
             transition: all 0.25s ease;
         }
 
         .citation-card:hover {
-            border-color: rgba(168, 85, 247, 0.4);
+            border-color: rgba(128, 161, 212, 0.28);
             transform: translateY(-1px);
         }
 
@@ -440,9 +472,9 @@
             font-family: 'Fira Code', monospace;
             font-size: 0.78rem;
             font-weight: 700;
-            background: rgba(168, 85, 247, 0.2);
-            border: 1px solid rgba(168, 85, 247, 0.5);
-            color: #e9d5ff;
+            background: rgba(128, 161, 212, 0.14);
+            border: 1px solid rgba(128, 161, 212, 0.2);
+            color: #466291;
             padding: 3px 8px;
             border-radius: 6px;
         }
@@ -456,7 +488,7 @@
 
         .citation-text {
             font-size: 0.85rem;
-            color: #cbd5e1;
+            color: var(--text-main);
             line-height: 1.45;
         }
 
@@ -502,7 +534,7 @@
     <!-- Header HUD -->
     <header class="glass-panel">
         <div class="brand-title">
-            <span>⚡ STREAMING LIVE RAG ENGINE</span>
+            <span>STREAMING LIVE RAG ENGINE</span>
         </div>
         <div class="hud-status-bar">
             <div id="ws-status" class="badge badge-online">
@@ -515,10 +547,10 @@
                 P95: 0 ms
             </div>
             <button onclick="openIngestModal()" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.8rem; min-width: auto;">
-                + Add Custom Doc
+                Add Custom Doc
             </button>
             <button onclick="resetSession()" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.8rem; min-width: auto;">
-                🔄 Reset State (v1)
+                Reset State (v1)
             </button>
         </div>
     </header>
@@ -530,10 +562,10 @@
         <div class="column-panel">
             <div class="glass-panel" style="padding: 1.25rem;">
                 <div class="panel-header">
-                    <span>🎙️ Live Speech Transcript Stream</span>
+                    <span>Live Speech Transcript Stream</span>
                 </div>
 
-                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">
+                <label class="secondary-label" style="font-size: 0.8rem; display: block; margin-bottom: 0.4rem;">
                     Scenario Presets (Click to Load):
                 </label>
                 <div class="presets-grid">
@@ -551,17 +583,17 @@
                     </div>
                 </div>
 
-                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">
+                <label class="secondary-label" style="font-size: 0.8rem; display: block; margin-bottom: 0.4rem;">
                     Transcript Stream Buffer:
                 </label>
                 <textarea id="transcript-input" class="glass-input" placeholder="Type or click a scenario preset to simulate streaming speech..."></textarea>
 
                 <div class="btn-group" style="margin-top: 1rem;">
                     <button onclick="sendPayload()" class="btn btn-primary">
-                        🚀 Stream Payload
+                        Stream Payload
                     </button>
                     <button id="speech-btn" onclick="toggleSpeechSimulation()" class="btn btn-speech">
-                        🎙️ Voice Stream
+                        Voice Stream
                     </button>
                 </div>
             </div>
@@ -569,12 +601,12 @@
             <!-- Graph State Overview -->
             <div class="glass-panel" style="padding: 1.25rem;">
                 <div class="panel-header">
-                    <span>🧠 Knowledge Graph State</span>
+                    <span>Knowledge Graph State</span>
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">
-                    Checksum: <span id="graph-checksum" style="font-family: 'Fira Code', monospace; color: var(--cyan-glow);">0x8A1000</span>
+                <div class="secondary-label" style="font-size: 0.8rem;">
+                    Checksum: <span id="graph-checksum" style="font-family: 'Fira Code', monospace; color: #0D9488;">0x8A1000</span>
                 </div>
-                <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+                <div class="secondary-label" style="margin-top: 0.5rem; font-size: 0.8rem;">
                     Active Session Entities (& Delta &Delta;):
                 </div>
                 <div id="entity-container" class="entity-cloud">
@@ -587,7 +619,7 @@
         <div class="column-panel">
             <div class="glass-panel" style="padding: 1.25rem;">
                 <div class="panel-header">
-                    <span>⚙️ 5-Gate Logic Pipeline Monitor</span>
+                    <span>5-Gate Logic Pipeline Monitor</span>
                 </div>
 
                 <div class="gate-flow">
@@ -633,7 +665,7 @@
                 </div>
 
                 <div style="margin-top: 1rem;">
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem;">Gate Decision Reasoning:</div>
+                    <div class="secondary-label" style="font-size: 0.8rem; margin-bottom: 0.3rem;">Gate Decision Reasoning:</div>
                     <div id="gate-reason" class="reason-box">
                         System ready. Input a stream turn payload to trigger the pipeline gates.
                     </div>
@@ -643,19 +675,19 @@
 
         <!-- Column 3: Decomposed Intents & RRF Hybrid Citations -->
         <div class="column-panel">
-            <div class="glass-panel" style="padding: 1.25rem;">
+            <div class="glass-panel citations-panel" style="padding: 1.25rem;">
                 <div class="panel-header">
-                    <span>🔍 Grounded Citations & RRF Results</span>
+                    <span>Grounded Citations & RRF Results</span>
                 </div>
 
                 <div style="margin-bottom: 0.75rem;">
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem;">Decomposed Sub-Queries (&Delta; Delta):</div>
-                    <div id="intents-container" style="font-size: 0.82rem; line-height: 1.5; color: #cbd5e1;">
+                    <div class="citations-subheader" style="font-size: 0.8rem; margin-bottom: 0.3rem;">Decomposed Sub-Queries (&Delta; Delta):</div>
+                    <div id="intents-container">
                         <em>No active sub-queries evaluated yet.</em>
                     </div>
                 </div>
 
-                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+                <div class="citations-subheader" style="font-size: 0.8rem; margin-bottom: 0.4rem;">
                     Retrieved Documents (BM25 + Dense RRF):
                 </div>
                 <div id="citations-list" class="citation-list">
@@ -678,7 +710,7 @@
     <div id="ingest-modal" class="modal-overlay">
         <div class="glass-panel modal-content">
             <div class="panel-header" style="justify-content: space-between;">
-                <span>📄 Ingest Custom Knowledge Document</span>
+                <span>Ingest Custom Knowledge Document</span>
                 <span onclick="closeIngestModal()" style="cursor: pointer; color: var(--text-muted);">&times;</span>
             </div>
             

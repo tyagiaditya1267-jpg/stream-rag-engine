@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Streaming Live RAG Engine icon">
+  <defs>
+    <linearGradient id="g" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#75C9C8"/>
+      <stop offset="50%" stop-color="#80A1D4"/>
+      <stop offset="100%" stop-color="#C0B9DD"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#F7F4EA"/>
+  <path d="M18 46V18h9.5c6.1 0 10.5 3.8 10.5 9.2 0 5.4-4.4 9.2-10.5 9.2H26v9.6h-8zm8-15.2h1.3c3.1 0 5.1-1.8 5.1-4.6 0-2.8-2-4.6-5.1-4.6H26v9.2z" fill="url(#g)"/>
+  <path d="M39 46l7-14h-7V18h14l-7 14h7v14z" fill="#80A1D4" opacity="0.9"/>
+</svg>

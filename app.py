@@ -4,6 +4,7 @@ import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 
@@ -13,6 +14,9 @@ from search_engine import async_hybrid_search, deduplicate_results, ensure_colle
 from ingest import ingest_documents
 
 app = FastAPI(title="Streaming Live RAG Engine", version="2.0.0")
+
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # Enable CORS for cross-origin web integration
 app.add_middleware(
@@ -49,6 +53,13 @@ async def get_index():
     if os.path.exists(static_file):
         return FileResponse(static_file)
     return HTMLResponse("<h2>Streaming Live RAG Engine API</h2><p>Static UI file not found.</p>")
+
+@app.get("/favicon.ico")
+async def get_favicon():
+    favicon_file = os.path.join(static_dir, "favicon.svg")
+    if os.path.exists(favicon_file):
+        return FileResponse(favicon_file)
+    return HTMLResponse("", status_code=404)
 
 @app.get("/api/health")
 async def health_check():

@@ -1,0 +1,185 @@
+:root {
+  --floral-white: #F7F4EA;
+  --floral-white-rgb: 247, 244, 234;
+  --lavender: #DED9E2;
+  --lavender-soft: #F2EFF6;
+  --periwinkle: #C0B9DD;
+  --periwinkle-soft: #E8E3F5;
+  --wisteria-blue: #80A1D4;
+  --wisteria-blue-soft: #E4EEF9;
+  --pearl-aqua: #75C9C8;
+  --pearl-aqua-soft: #EAF9F8;
+  --soft-yellow: #F5E7A3;
+  --page-bg-1: #DFF7F5;
+  --page-bg-2: #CFE1F7;
+  --page-bg-3: #BED3F1;
+  --surface-glass: rgba(247, 244, 234, 0.85);
+  --surface-glass-strong: rgba(247, 244, 234, 0.92);
+  --surface-border: rgba(128, 161, 212, 0.22);
+  --primary-accent: #75C9C8;
+  --primary-accent-strong: #5bb4b2;
+  --primary-hover: rgba(128, 161, 212, 0.14);
+  --text-strong: #24314d;
+  --text-medium: #4f5d78;
+  --text-soft: #697a92;
+  --shadow-soft: rgba(59, 76, 102, 0.12);
+}
+
+body {
+  background: linear-gradient(135deg, var(--page-bg-1) 0%, var(--page-bg-2) 52%, var(--page-bg-3) 100%);
+  color: var(--text-strong);
+}
+
+.glass-panel {
+  background: var(--surface-glass);
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 20px 50px rgba(59, 76, 102, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(18px) saturate(185%);
+  -webkit-backdrop-filter: blur(18px) saturate(185%);
+}
+
+.brand-title {
+  background: linear-gradient(135deg, #2d3f5d 0%, #5f7db2 42%, #3a8d8b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge-online {
+  background: rgba(117, 201, 200, 0.18);
+  border-color: rgba(117, 201, 200, 0.35);
+  color: #2b847e;
+}
+
+.badge-version {
+  background: rgba(128, 161, 212, 0.12);
+  border-color: rgba(128, 161, 212, 0.18);
+  color: #47679d;
+}
+
+.badge-latency {
+  background: rgba(192, 185, 221, 0.22);
+  border-color: rgba(192, 185, 221, 0.28);
+  color: #4f4e77;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--pearl-aqua) 0%, #6bb7c0 100%);
+  color: #153645;
+  box-shadow: 0 12px 24px rgba(117, 201, 200, 0.2);
+}
+
+.btn-speech {
+  background: linear-gradient(135deg, var(--wisteria-blue) 0%, #6a8bd1 100%);
+  color: #f8faff;
+  box-shadow: 0 12px 24px rgba(128, 161, 212, 0.2);
+}
+
+.btn-secondary {
+  background: rgba(128, 161, 212, 0.08);
+  border: 1px solid rgba(128, 161, 212, 0.18);
+  color: var(--text-strong);
+}
+
+.btn-secondary:hover,
+.chip:hover,
+.nav-link:hover {
+  background: rgba(128, 161, 212, 0.12);
+}
+
+.chip {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(128, 161, 212, 0.18);
+  color: var(--text-medium);
+}
+
+.chip:hover {
+  border-color: rgba(117, 201, 200, 0.5);
+  color: #244a50;
+}
+
+.gate-card {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(128, 161, 212, 0.14);
+}
+
+.gate-card.active-COMMIT,
+.gate-card.active-RETRIEVE {
+  border-color: rgba(117, 201, 200, 0.55);
+  background: rgba(117, 201, 200, 0.12);
+}
+
+.gate-card.active-SUPPRESS {
+  border-color: rgba(192, 185, 221, 0.6);
+  background: rgba(192, 185, 221, 0.16);
+}
+
+.gate-card.active-FALLBACK {
+  border-color: rgba(248, 113, 113, 0.42);
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.gate-card.active-WAIT {
+  border-color: rgba(251, 191, 36, 0.38);
+  background: rgba(251, 191, 36, 0.08);
+}
+
+.reason-box {
+  background: rgba(255, 255, 255, 0.22);
+  border-left: 3px solid var(--pearl-aqua);
+  color: var(--text-medium);
+}
+
+.citation-tag {
+  background: rgba(128, 161, 212, 0.14);
+  border-color: rgba(128, 161, 212, 0.2);
+  color: #466291;
+}
+
+.entity-pill {
+  background: rgba(117, 201, 200, 0.14);
+  border-color: rgba(117, 201, 200, 0.25);
+  color: #306d6c;
+}
+
+.entity-pill.delta-new {
+  background: rgba(117, 201, 200, 0.2);
+  border-color: rgba(117, 201, 200, 0.4);
+  color: #1e5757;
+}
+
+.feature-card--management {
+  background: rgba(192, 185, 221, 0.55);
+}
+
+.feature-card--analytics {
+  background: rgba(222, 217, 226, 0.7);
+}
+
+.feature-card--crm {
+  background: rgba(128, 161, 212, 0.42);
+}
+
+.feature-card--project {
+  background: rgba(192, 185, 221, 0.46);
+}
+
+.feature-card--marketing {
+  background: rgba(245, 231, 163, 0.72);
+}
+
+.feature-card--automation {
+  background: rgba(117, 201, 200, 0.45);
+}
+
+.primary-toggle,
+.status-bubble,
+.accent-badge {
+  background: rgba(117, 201, 200, 0.18);
+  border-color: rgba(117, 201, 200, 0.28);
+  color: #255c5f;
+}
+
+.primary-link:hover,
+.nav-link:hover {
+  background: rgba(128, 161, 212, 0.12);
+}
