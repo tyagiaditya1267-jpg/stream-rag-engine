@@ -1,8 +1,31 @@
+import subprocess
+import time
+import httpx
 import streamlit as st
 import json
 import asyncio
 import websockets
-import time
+
+# Automatically start FastAPI backend in background on Streamlit Cloud/Local
+@st.cache_resource
+def start_fastapi_backend():
+    # Check if backend is already listening
+    try:
+        res = httpx.get("http://127.0.0.1:8000/docs", timeout=1.0)
+        if res.status_code == 200:
+            return
+    except Exception:
+        pass
+
+    # Launch FastAPI (app.py) in background thread
+    process = subprocess.Popen(
+        ["python", "-m", "uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8000"]
+    )
+    time.sleep(2)  # Give uvicorn a moment to initialize
+    return process
+
+# Trigger background process initialization
+start_fastapi_backend()
 
 # Page config for wide layout and dark theme
 st.set_page_config(
@@ -105,7 +128,7 @@ st.markdown("""
 st.markdown('<div class="hud-title">⚡ STREAMING LIVE RAG ENGINE</div>', unsafe_allow_html=True)
 st.markdown("""
 <div class="status-badge">
-    <div class="pulse-dot"></div> ENGINE ONLINE | WEBSOCKET: WS://LOCALHOST:8000/WS/STREAM
+    <div class="pulse-dot"></div> ENGINE ONLINE | WEBSOCKET: WS://127.0.0.1:8000/WS/STREAM
 </div>
 """, unsafe_allow_html=True)
 
@@ -138,7 +161,7 @@ with col_right:
 # Execute WebSocket round-trip when button is pressed
 if simulate_btn and user_input:
     async def stream_to_backend():
-        uri = "ws://localhost:8000/ws/stream"
+        uri = "ws://127.0.0.1:8000/ws/stream"
         start_time = time.time()
         try:
             async with websockets.connect(uri) as websocket:
@@ -183,6 +206,6 @@ if simulate_btn and user_input:
                         st.info("No vector search fired for current token payload.")
                         
         except Exception as e:
-            telemetry_placeholder.error(f"WebSocket Connection Failed: {e}. Ensure `python app.py` is running.")
+            telemetry_placeholder.error(f"WebSocket Connection Failed: {e}. Ensure backend is running.")
 
     asyncio.run(stream_to_backend())
