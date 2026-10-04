@@ -226,3 +226,110 @@
   padding: 12px 0;
 }
 
+/* ==========================================================================
+   Streamlit Specific Layout Overrides
+   ========================================================================== */
+
+.stApp {
+  background: var(--page-bg-gradient) !important;
+  background-attachment: fixed !important;
+  color: #2D3748 !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Custom HUD Header */
+.hud-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 2.2rem;
+  background: linear-gradient(90deg, #4FA8A7, #5D82BA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.2rem;
+}
+
+/* Live status badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(var(--color-pearl-aqua-rgb), 0.2);
+  border: 1px solid var(--color-pearl-aqua);
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #134E4D;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-pearl-aqua);
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 8px var(--color-pearl-aqua);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.4; transform: scale(0.9); }
+}
+
+/* Frosted glass container panel */
+.main-glass-panel {
+  background: var(--container-bg-glass);
+  backdrop-filter: blur(var(--container-glass-blur));
+  -webkit-backdrop-filter: blur(var(--container-glass-blur));
+  border: 1px solid var(--container-border-glass);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 8px 32px 0 rgba(128, 161, 212, 0.15);
+  margin-bottom: 1rem;
+}
+
+/* Telemetry cards */
+.telemetry-card {
+  background-color: var(--card-bg-project) !important;
+  border: 1px solid var(--card-border-subtle) !important;
+  border-radius: 10px !important;
+  padding: 16px !important;
+  margin-bottom: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+}
+
+.citation-pill {
+  background: var(--color-pearl-aqua) !important;
+  color: #0F3E3D !important;
+  font-weight: 600 !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-size: 0.82rem !important;
+  font-family: monospace !important;
+  display: inline-block !important;
+  margin-top: 6px !important;
+}
+
+/* Selectbox styling */
+.stSelectbox > div {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 8px !important;
+}
+
+/* Button styling with interactive hover */
+.stButton > button {
+  background-color: var(--color-pearl-aqua) !important;
+  color: #0B3332 !important;
+  font-weight: 600 !important;
+  border: 1px solid transparent !important;
+  transition: all 0.2s ease !important;
+}
+
+.stButton > button:hover {
+  background-color: var(--color-wisteria-blue) !important;
+  color: #FFFFFF !important;
+}
+
+
