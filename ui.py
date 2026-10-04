@@ -35,92 +35,116 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# High-Tech Glassmorphism & Cyberpunk CSS Injection
-st.markdown("""
+# Load theme.css styling
+with open("theme.css", "r") as f:
+    custom_theme_css = f.read()
+
+st.markdown(f"""
 <style>
-    /* Dark grid background styling */
-    .stApp {
-        background-color: #0b0f19;
-        background-image: radial-gradient(#1e293b 1px, transparent 1px);
-        background-size: 24px 24px;
-        color: #f8fafc;
-    }
-    
-    /* Custom HUD Header */
-    .hud-title {
-        font-family: 'Inter', sans-serif;
-        font-weight: 800;
-        font-size: 2.2rem;
-        background: linear-gradient(90deg, #00f0ff, #7000ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 0.2rem;
-    }
-    
-    /* Live status badge */
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.4);
-        padding: 4px 12px;
-        border-radius: 20px;
-        color: #10b981;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-    
-    .pulse-dot {
-        width: 8px;
-        height: 8px;
-        background-color: #10b981;
-        border-radius: 50%;
-        margin-right: 8px;
-        box-shadow: 0 0 8px #10b981;
-        animation: pulse 1.5s infinite;
-    }
-    
-    @keyframes pulse {
-        0% { opacity: 0.4; transform: scale(0.9); }
-        50% { opacity: 1; transform: scale(1.2); }
-        100% { opacity: 0.4; transform: scale(0.9); }
-    }
+{custom_theme_css}
 
-    /* Terminal-style stream display */
-    .terminal-container {
-        background: rgba(15, 23, 42, 0.8);
-        border: 1px solid rgba(0, 240, 255, 0.2);
-        border-radius: 10px;
-        padding: 16px;
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.05);
-        font-family: 'Consolas', 'Fira Code', monospace;
-        color: #38bdf8;
-        min-height: 120px;
-        margin-top: 10px;
-    }
+/* Streamlit application specific overrides using the palette */
+.stApp {{
+    background: var(--page-bg-gradient);
+    background-attachment: fixed;
+    color: #2D3748;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}}
 
-    /* Telemetry cards */
-    .telemetry-card {
-        background: rgba(30, 41, 59, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(8px);
-        border-radius: 10px;
-        padding: 16px;
-        margin-bottom: 12px;
-    }
-    
-    .citation-pill {
-        background: rgba(112, 0, 255, 0.2);
-        border: 1px solid rgba(112, 0, 255, 0.5);
-        color: #e0e7ff;
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 0.85rem;
-        font-family: monospace;
-        display: inline-block;
-        margin-top: 6px;
-    }
+/* Custom HUD Header */
+.hud-title {{
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 2.2rem;
+    background: linear-gradient(90deg, #4FA8A7, #5D82BA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.2rem;
+}}
+
+/* Live status badge using solid Pearl Aqua */
+.status-badge {{
+    display: inline-flex;
+    align-items: center;
+    background: rgba(var(--color-pearl-aqua-rgb), 0.2);
+    border: 1px solid var(--color-pearl-aqua);
+    padding: 6px 14px;
+    border-radius: 20px;
+    color: #134E4D;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}}
+
+.pulse-dot {{
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-pearl-aqua);
+    border-radius: 50%;
+    margin-right: 8px;
+    box-shadow: 0 0 8px var(--color-pearl-aqua);
+    animation: pulse 1.5s infinite;
+}}
+
+@keyframes pulse {{
+    0% { opacity: 0.4; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 0.4; transform: scale(0.9); }
+}}
+
+/* Frosted glass container panel */
+.main-glass-panel {{
+    background: var(--container-bg-glass);
+    backdrop-filter: blur(var(--container-glass-blur));
+    -webkit-backdrop-filter: blur(var(--container-glass-blur));
+    border: 1px solid var(--container-border-glass);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 8px 32px 0 rgba(128, 161, 212, 0.15);
+    margin-bottom: 1rem;
+}}
+
+/* Telemetry cards using pastel cards from theme */
+.telemetry-card {{
+    background-color: var(--card-bg-project);
+    border: 1px solid var(--card-border-subtle);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}}
+
+.citation-pill {{
+    background: var(--color-pearl-aqua);
+    color: #0F3E3D;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-family: monospace;
+    display: inline-block;
+    margin-top: 6px;
+}}
+
+/* Input and select styling */
+.stTextArea textarea, .stSelectbox > div {{
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-radius: 8px !important;
+}}
+
+/* Button styling with interactive hover */
+.stButton > button {{
+    background-color: var(--color-pearl-aqua) !important;
+    color: #0B3332 !important;
+    font-weight: 600 !important;
+    border: 1px solid transparent !important;
+    transition: all 0.2s ease !important;
+}}
+
+.stButton > button:hover {{
+    background-color: var(--color-wisteria-blue) !important;
+    color: #FFFFFF !important;
+}}
 </style>
 """, unsafe_allow_html=True)
 

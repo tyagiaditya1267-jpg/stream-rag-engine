@@ -1,0 +1,166 @@
+/**
+ * Theme Stylesheet: Soft Pastel & Frosted Glass Palette
+ * 
+ * Palette:
+ * - Floral White:  #F7F4EA (RGB: 247, 244, 234)
+ * - Lavender:      #DED9E2 (RGB: 222, 217, 226)
+ * - Periwinkle:    #C0B9DD (RGB: 192, 185, 221)
+ * - Wisteria Blue: #80A1D4 (RGB: 128, 161, 212)
+ * - Pearl Aqua:    #75C9C8 (RGB: 117, 201, 200)
+ */
+
+:root {
+  /* --- Base Palette Hex Values --- */
+  --color-floral-white: #F7F4EA;
+  --color-lavender: #DED9E2;
+  --color-periwinkle: #C0B9DD;
+  --color-wisteria-blue: #80A1D4;
+  --color-pearl-aqua: #75C9C8;
+
+  /* --- Base Palette RGB Channels (for dynamic opacity) --- */
+  --color-floral-white-rgb: 247, 244, 234;
+  --color-lavender-rgb: 222, 217, 226;
+  --color-periwinkle-rgb: 192, 185, 221;
+  --color-wisteria-blue-rgb: 128, 161, 212;
+  --color-pearl-aqua-rgb: 117, 201, 200;
+
+  /* --- 1. Backgrounds & Surfacing --- */
+  /* Main glass container: Floral White at ~85% opacity */
+  --container-bg-glass: rgba(var(--color-floral-white-rgb), 0.85);
+  --container-border-glass: rgba(255, 255, 255, 0.45);
+  --container-glass-blur: 16px;
+
+  /* Page background mesh gradient: Pearl Aqua to Lightened Wisteria Blue */
+  --color-wisteria-blue-light: #B2C8E8;
+  --page-bg-gradient: radial-gradient(
+      circle at 15% 20%,
+      rgba(var(--color-pearl-aqua-rgb), 0.45) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(178, 200, 232, 0.55) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(var(--color-floral-white-rgb), 0.7) 0%,
+      #EDF3F7 100%
+    );
+
+  /* --- 2. Service/Feature Card Pastel Backgrounds --- */
+  /* Management: Pale Periwinkle */
+  --card-bg-management: #EAE6F4;
+  /* Data Analytics: Light Lavender */
+  --card-bg-data-analytics: #F1EFF5;
+  /* CRM Automation: Lightened Wisteria Blue */
+  --card-bg-crm-automation: #D3E0F2;
+  /* Project: Lightened Periwinkle */
+  --card-bg-project: #E4E0F0;
+  /* Marketing: Original Soft Yellow */
+  --card-bg-marketing: #FEF9E7;
+  /* Automation: Pale Pearl Aqua */
+  --card-bg-automation: #D8F2F1;
+
+  /* Card border tint */
+  --card-border-subtle: rgba(255, 255, 255, 0.6);
+
+  /* --- 3. Highlighting & Interactions --- */
+  /* Primary Accent */
+  --accent-primary: var(--color-pearl-aqua);
+  --accent-primary-hover: #61B7B6;
+  --accent-primary-rgb: var(--color-pearl-aqua-rgb);
+
+  /* Interactive Hover (Buttons/Nav links) */
+  --interactive-hover-bg: rgba(var(--color-wisteria-blue-rgb), 0.16);
+  --interactive-active-bg: rgba(var(--color-wisteria-blue-rgb), 0.28);
+}
+
+/* ==========================================================================
+   Utility & Component Classes
+   ========================================================================== */
+
+/* Page Mesh Background */
+.theme-page-bg {
+  min-height: 100vh;
+  background: var(--page-bg-gradient);
+  background-attachment: fixed;
+}
+
+/* Frosted Glass Main Container */
+.glass-container {
+  background: var(--container-bg-glass);
+  backdrop-filter: blur(var(--container-glass-blur));
+  -webkit-backdrop-filter: blur(var(--container-glass-blur));
+  border: 1px solid var(--container-border-glass);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(128, 161, 212, 0.12);
+}
+
+/* Feature Cards */
+.card-management {
+  background-color: var(--card-bg-management);
+  border: 1px solid var(--card-border-subtle);
+}
+
+.card-data-analytics {
+  background-color: var(--card-bg-data-analytics);
+  border: 1px solid var(--card-border-subtle);
+}
+
+.card-crm-automation {
+  background-color: var(--card-bg-crm-automation);
+  border: 1px solid var(--card-border-subtle);
+}
+
+.card-project {
+  background-color: var(--card-bg-project);
+  border: 1px solid var(--card-border-subtle);
+}
+
+.card-marketing {
+  background-color: var(--card-bg-marketing);
+  border: 1px solid var(--card-border-subtle);
+}
+
+.card-automation {
+  background-color: var(--card-bg-automation);
+  border: 1px solid var(--card-border-subtle);
+}
+
+/* Highlighting and Interactive Elements */
+.accent-pearl-aqua,
+.btn-primary {
+  background-color: var(--accent-primary);
+  color: #1A3B3B;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-primary-hover);
+}
+
+.status-bubble {
+  background-color: var(--accent-primary);
+  color: #133333;
+}
+
+.toggle-switch-active {
+  background-color: var(--accent-primary);
+}
+
+/* Nav links and subtle interactive button hover states */
+.nav-link,
+.btn-subtle {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover,
+.btn-subtle:hover {
+  background-color: var(--interactive-hover-bg);
+}
+
+.nav-link:active,
+.btn-subtle:active {
+  background-color: var(--interactive-active-bg);
+}
