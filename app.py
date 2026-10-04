@@ -2,58 +2,45 @@ import json
 import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from intent_controller import StreamIntentController
-from search_engine import hybrid_search
+from search_engine import concurrent_multi_search
+from state_differ import SessionStateDiffer
 
-app = FastAPI()
+app = FastAPI(title="Streaming Intent & Retrieval Engine")
 controller = StreamIntentController()
 
 @app.websocket("/ws/stream")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    print("UI connected to streaming socket.")
+    # Initialize session state differ for this client stream
+    differ = SessionStateDiffer()
     
     try:
         while True:
             data = await websocket.receive_text()
-            payload = json.loads(data)
-            transcript = payload.get("transcript", "")
-
-            # Evaluate streaming action using intent controller
-            decision = controller.analyze_stream(transcript)
-
-            if decision["action"] == "WAIT":
-                await websocket.send_json({
-                    "status": "WAITING",
-                    "reason": decision["reason"],
-                    "transcript": transcript,
-                    "retrieved_docs": []
-                })
-
-            elif decision["action"] == "SUPPRESS":
-                await websocket.send_json({
-                    "status": "SUPPRESSED",
-                    "reason": decision["reason"],
-                    "transcript": transcript,
-                    "retrieved_docs": []
-                })
-
-            elif decision["action"] == "RETRIEVE":
-                all_results = []
-                for intent in decision["intents"]:
-                    results = hybrid_search(intent, top_k=2)
-                    all_results.extend(results)
-
-                await websocket.send_json({
-                    "status": "RETRIEVED",
-                    "reason": decision["reason"],
-                    "intents": decision["intents"],
-                    "transcript": transcript,
-                    "retrieved_docs": all_results
-                })
-
+            analysis = controller.analyze_stream(data)
+            
+            if analysis.get("action") == "RETRIEVE":
+                retrieved_docs = await concurrent_multi_search(analysis.get("intents", []))
+            else:
+                retrieved_docs = []
+                
+            # Compute version delta (v1 -> v2)
+            delta_info = differ.compute_delta(analysis, retrieved_docs)
+            
+            # Enrich analysis dictionary with telemetry & versioning
+            analysis["retrieved_docs"] = delta_info["docs"]
+            analysis["version"] = delta_info["version"]
+            analysis["is_delta_update"] = delta_info["is_delta_update"]
+            analysis["update_type"] = delta_info["update_type"]
+            
+            await websocket.send_json(analysis)
+            
     except WebSocketDisconnect:
-        print("UI disconnected.")
+        print("Client disconnected cleanly.")
+    except Exception as e:
+        print(f"Error processing websocket stream: {e}")
+        await websocket.close()
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)

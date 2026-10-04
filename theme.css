@@ -164,3 +164,65 @@
 .btn-subtle:active {
   background-color: var(--interactive-active-bg);
 }
+
+/* ==========================================================================
+   Restyled Components: Transcript Stream Buffer & Grounded Citations
+   ========================================================================== */
+
+/* 1. Transcript Stream Buffer Container */
+.transcript-buffer-container,
+.stTextArea textarea {
+  background: rgba(247, 244, 234, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(192, 185, 221, 0.4) !important;
+  border-radius: 12px !important;
+  color: #1E293B !important; /* Deep Slate (active text) */
+  font-family: 'Consolas', 'Fira Code', monospace !important;
+  font-size: 0.95rem !important;
+  padding: 14px 16px !important;
+  box-shadow: 0 4px 16px 0 rgba(128, 161, 212, 0.08) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* Placeholder styling */
+.transcript-buffer-container::placeholder,
+.stTextArea textarea::placeholder {
+  color: #64748B !important; /* Slate-500 */
+  opacity: 1 !important;
+}
+
+/* Focus state with Pearl Aqua highlight and subtle glow */
+.transcript-buffer-container:focus,
+.transcript-buffer-container:focus-within,
+.stTextArea textarea:focus {
+  outline: none !important;
+  border-color: #75C9C8 !important; /* Pearl Aqua */
+  box-shadow: 0 0 0 3px rgba(117, 201, 200, 0.25), 0 4px 20px 0 rgba(117, 201, 200, 0.2) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* 2. Grounded Citations & RRF Results Section Typography */
+.citations-section-header,
+.section-header-contrast {
+  color: #1E293B !important; /* Slate-800 bold */
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+  letter-spacing: -0.01em;
+}
+
+.sub-header-contrast {
+  color: #475569 !important; /* Slate-600 semi-bold */
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.empty-state-text {
+  color: #64748B !important; /* Slate-500 italic */
+  font-style: italic !important;
+  font-size: 0.9rem !important;
+  padding: 12px 0;
+}
+

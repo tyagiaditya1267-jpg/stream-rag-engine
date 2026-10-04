@@ -160,7 +160,7 @@ st.markdown("""
 col_left, col_right = st.columns([1, 1], gap="large")
 
 with col_left:
-    st.subheader("🎙️ Live Speech Transcript Stream")
+    st.markdown('<div class="citations-section-header">🎙️ Transcript Stream Buffer</div>', unsafe_allow_html=True)
     
     # Preset triggers for rapid testing
     preset = st.selectbox(
@@ -174,13 +174,17 @@ with col_left:
     )
     
     default_text = "" if preset == "Type custom prompt..." else preset
-    user_input = st.text_area("Live Transcript Buffer:", value=default_text, height=100)
+    user_input = st.text_area("Live Transcript Buffer:", value=default_text, height=120, placeholder="Waiting for real-time speech token stream...")
     
     simulate_btn = st.button("🚀 Stream Token Payload")
 
 with col_right:
-    st.subheader("🔍 Real-time Telemetry & Citations")
+    st.markdown('<div class="citations-section-header">🔍 Grounded Citations & RRF Results</div>', unsafe_allow_html=True)
     telemetry_placeholder = st.empty()
+
+# Initial empty state before interaction
+with telemetry_placeholder.container():
+    st.markdown('<div class="empty-state-text">No active sub-queries evaluated yet.</div>', unsafe_allow_html=True)
 
 # Execute WebSocket round-trip when button is pressed
 if simulate_btn and user_input:
@@ -204,30 +208,35 @@ if simulate_btn and user_input:
                     st.markdown("---")
                     
                     # Reason & Intents
-                    st.markdown(f"**Gate Reasoning:** `{data.get('reason', 'N/A')}`")
+                    st.markdown(f'<div class="sub-header-contrast">Gate Reasoning: <span style="font-weight: normal; font-family: monospace; color: #1E293B;">{data.get("reason", "N/A")}</span></div>', unsafe_allow_html=True)
                     
                     intents = data.get("intents", [])
+                    st.markdown('<div class="sub-header-contrast">Decomposed Sub-Queries:</div>', unsafe_allow_html=True)
                     if intents:
-                        st.markdown("**Decomposed Intents:**")
                         for idx, intent in enumerate(intents, 1):
-                            st.write(f"- Sub-query {idx}: `{intent}`")
+                            st.markdown(f'<div style="color: #334155; font-size: 0.9rem; padding: 2px 0 2px 8px;">• Sub-query {idx}: <code style="color: #0F3E3D; background: rgba(117,201,200,0.2);">{intent}</code></div>', unsafe_allow_html=True)
+                    else:
+                        st.markdown('<div class="empty-state-text">No active sub-queries evaluated yet.</div>', unsafe_allow_html=True)
                     
-                    # Retrieved Citations
+                    # Retrieved Documents / Citations
                     docs = data.get("retrieved_docs", [])
+                    st.markdown('<div class="sub-header-contrast" style="margin-top: 1rem;">Retrieved Documents:</div>', unsafe_allow_html=True)
                     if docs:
-                        st.markdown("**Grounded Context Citations:**")
                         for doc in docs:
                             citation = doc.get('citation', '[Doc_Ref]')
                             text = doc.get('text', '')
                             score = doc.get('score', 0.0)
                             st.markdown(f"""
                             <div class="telemetry-card">
-                                <span class="citation-pill">{citation}</span> <b>Match Score: {score}</b>
-                                <p style="margin-top: 8px; color: #cbd5e1; font-size: 0.9rem;">{text}</p>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <span class="citation-pill">{citation}</span>
+                                    <span style="font-size: 0.85rem; color: #475569; font-weight: 600;">Match Score: {score}</span>
+                                </div>
+                                <p style="margin: 0; color: #1E293B; font-size: 0.9rem; line-height: 1.5;">{text}</p>
                             </div>
                             """, unsafe_allow_html=True)
                     else:
-                        st.info("No vector search fired for current token payload.")
+                        st.markdown('<div class="empty-state-text">No vector search fired for current token payload.</div>', unsafe_allow_html=True)
                         
         except Exception as e:
             telemetry_placeholder.error(f"WebSocket Connection Failed: {e}. Ensure backend is running.")

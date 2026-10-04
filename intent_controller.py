@@ -1,53 +1,56 @@
 import re
+import asyncio
+from typing import List, Dict, Any
 
 class StreamIntentController:
     def __init__(self):
-        # Trigger words indicating a reformat request (Gate G4 Suppression)
-        self.suppress_patterns = [
-            r"summarize", r"bullet points", r"format as", r"rephrase", 
-            r"make it shorter", r"translate", r"simplify"
-        ]
-        # Common stop words to check chunk completeness
-        self.incomplete_endings = ["a", "an", "the", "in", "at", "to", "for", "with", "and", "or"]
+        # Trigger words indicating formatting/meta directives (Gate G4 Suppress)
+        self.suppress_keywords = ["format", "bullet points", "summarize", "rephrase", "table", "bold"]
+        
+    def decompose_query(self, text: str) -> List[str]:
+        """
+        Splits a compound multi-intent transcript into individual sub-queries.
+        Example: 'What is the venue capacity and what is the cancellation fee?'
+        -> ['What is the venue capacity', 'what is the cancellation fee']
+        """
+        # Split on conjunctions like 'and', 'also', 'as well as', or delimiters like commas/question marks
+        raw_splits = re.split(r'\b(?:and|also|as well as)\b|[?,;]', text, flags=re.IGNORECASE)
+        
+        # Clean up leading/trailing spaces and keep valid sub-queries
+        sub_queries = [q.strip() for q in raw_splits if len(q.strip()) > 3]
+        
+        # Return unique sub-queries or fallback to full text if no split found
+        return sub_queries if sub_queries else [text.strip()]
 
-    def analyze_stream(self, current_transcript: str) -> dict:
-        text = current_transcript.strip().lower()
-        words = text.split()
+    def analyze_stream(self, text: str) -> Dict[str, Any]:
+        text_clean = text.strip()
+        
+        # Gate G1: Check for incomplete/short input
+        if len(text_clean.split()) < 3:
+            return {
+                "action": "WAIT",
+                "reason": "Sentence incomplete or context expanding.",
+                "intents": []
+            }
+            
+        # Gate G4: Check for contextual/formatting updates (Suppress vector search)
+        if any(keyword in text_clean.lower() for keyword in self.suppress_keywords):
+            return {
+                "action": "SUPPRESS",
+                "reason": "Formatting/Contextual update request detected. Bypassing vector search.",
+                "intents": []
+            }
 
-        if not words:
-            return {"action": "WAIT", "reason": "Empty input"}
-
-        # 1. Gate G4: Query Suppression Check
-        for pattern in self.suppress_patterns:
-            if re.search(pattern, text):
-                return {
-                    "action": "SUPPRESS", 
-                    "reason": "Formatting/Contextual update request detected. Bypassing vector search."
-                }
-
-        # 2. Gate G2: Speculative Retrieval Check (Mid-sentence stability)
-        if len(words) < 3 or words[-1] in self.incomplete_endings:
-            return {"action": "WAIT", "reason": "Sentence incomplete or context expanding."}
-
-        # 3. Gate G3: Multi-Intent Detection
-        intents = self._split_intents(current_transcript)
+        # Gate G2 & G3: Multi-intent decomposition & execution trigger
+        intents = self.decompose_query(text_clean)
         
         return {
             "action": "RETRIEVE",
-            "intents": intents,
-            "reason": f"Stable entity detected. Executing {len(intents)} search(es)."
+            "reason": f"Stable entity detected. Executing {len(intents)} concurrent search(es).",
+            "intents": intents
         }
-
-    def _split_intents(self, transcript: str) -> list[str]:
-        # Splits multi-intent queries on 'and', 'also', 'what about'
-        parts = re.split(r'\band\b|\balso\b|\bwhat about\b|\?', transcript, flags=re.IGNORECASE)
-        cleaned = [p.strip() for p in parts if len(p.strip()) > 3]
-        return cleaned if cleaned else [transcript]
 
 if __name__ == "__main__":
     controller = StreamIntentController()
-    
-    # Test Cases
-    print(controller.analyze_stream("I want to know about the"))  # Should WAIT
-    print(controller.analyze_stream("Format that as 2 bullet points"))  # Should SUPPRESS
-    print(controller.analyze_stream("What is the venue capacity and what is the cancellation fee?"))  # Should RETRIEVE 2 intents
+    test_transcript = "What is the venue capacity and what is the cancellation fee?"
+    print(controller.analyze_stream(test_transcript))
