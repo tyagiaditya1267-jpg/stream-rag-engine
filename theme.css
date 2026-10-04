@@ -50,6 +50,23 @@
    Global App & Glass Layout Overrides
    ========================================================================== */
 
+/* Remove Streamlit Default Dark Top Header Bar */
+header[data-testid="stHeader"],
+.stAppHeader,
+[data-testid="stHeader"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #1E293B !important;
+}
+
+header[data-testid="stHeader"] * {
+  color: #1E293B !important;
+}
+
+[data-testid="stDecoration"] {
+  display: none !important;
+}
+
 .stApp {
   background: var(--page-bg-gradient) !important;
   background-attachment: fixed !important;
@@ -58,7 +75,7 @@
 }
 
 .block-container {
-  padding-top: 2rem !important;
+  padding-top: 1rem !important;
   padding-bottom: 3rem !important;
   max-width: 1250px !important;
 }
