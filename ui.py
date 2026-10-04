@@ -53,7 +53,7 @@ st.markdown("""
 col_left, col_right = st.columns([1, 1], gap="large")
 
 with col_left:
-    st.markdown('<div class="citations-section-header">🎙️ Transcript Stream Buffer</div>', unsafe_allow_html=True)
+    st.markdown('<div class="citations-section-header">Transcript Stream Buffer</div>', unsafe_allow_html=True)
     
     # Preset triggers for rapid testing
     preset = st.selectbox(
@@ -69,10 +69,10 @@ with col_left:
     default_text = "" if preset == "Type custom prompt..." else preset
     user_input = st.text_area("Live Transcript Buffer:", value=default_text, height=120, placeholder="Waiting for real-time speech token stream...")
     
-    simulate_btn = st.button("🚀 Stream Token Payload")
+    simulate_btn = st.button("Stream Token Payload")
 
 with col_right:
-    st.markdown('<div class="citations-section-header">🔍 Grounded Citations & RRF Results</div>', unsafe_allow_html=True)
+    st.markdown('<div class="citations-section-header">Grounded Citations & RRF Results</div>', unsafe_allow_html=True)
     telemetry_placeholder = st.empty()
 
 # Initial empty state before interaction
