@@ -1,5 +1,5 @@
 /**
- * Theme Stylesheet: Soft Pastel & Frosted Glass Palette
+ * Theme Stylesheet: Glassmorphic UI with White Input Surfaces
  * 
  * Palette:
  * - Floral White:  #F7F4EA (RGB: 247, 244, 234)
@@ -17,319 +17,282 @@
   --color-wisteria-blue: #80A1D4;
   --color-pearl-aqua: #75C9C8;
 
-  /* --- Base Palette RGB Channels (for dynamic opacity) --- */
+  /* --- Base Palette RGB Channels --- */
   --color-floral-white-rgb: 247, 244, 234;
   --color-lavender-rgb: 222, 217, 226;
   --color-periwinkle-rgb: 192, 185, 221;
   --color-wisteria-blue-rgb: 128, 161, 212;
   --color-pearl-aqua-rgb: 117, 201, 200;
 
-  /* --- 1. Backgrounds & Surfacing --- */
-  /* Main glass container: Floral White at ~85% opacity */
-  --container-bg-glass: rgba(var(--color-floral-white-rgb), 0.85);
-  --container-border-glass: rgba(255, 255, 255, 0.45);
-  --container-glass-blur: 16px;
+  /* --- 1. Backgrounds & Glass Surfacing --- */
+  --container-bg-glass: rgba(255, 255, 255, 0.62);
+  --container-border-glass: rgba(255, 255, 255, 0.85);
+  --container-glass-blur: 20px;
 
-  /* Page background mesh gradient: Pearl Aqua to Lightened Wisteria Blue */
-  --color-wisteria-blue-light: #B2C8E8;
-  --page-bg-gradient: radial-gradient(
-      circle at 15% 20%,
-      rgba(var(--color-pearl-aqua-rgb), 0.45) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      circle at 85% 75%,
-      rgba(178, 200, 232, 0.55) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(var(--color-floral-white-rgb), 0.7) 0%,
-      #EDF3F7 100%
-    );
+  /* Soft dynamic mesh gradient background */
+  --page-bg-gradient: 
+    radial-gradient(circle at 10% 15%, rgba(117, 201, 200, 0.35) 0%, transparent 50%),
+    radial-gradient(circle at 90% 85%, rgba(128, 161, 212, 0.45) 0%, transparent 55%),
+    radial-gradient(circle at 50% 40%, rgba(247, 244, 234, 0.8) 0%, #E9F2F7 100%);
 
-  /* --- 2. Service/Feature Card Pastel Backgrounds --- */
-  /* Management: Pale Periwinkle */
-  --card-bg-management: #EAE6F4;
-  /* Data Analytics: Light Lavender */
-  --card-bg-data-analytics: #F1EFF5;
-  /* CRM Automation: Lightened Wisteria Blue */
-  --card-bg-crm-automation: #D3E0F2;
-  /* Project: Lightened Periwinkle */
-  --card-bg-project: #E4E0F0;
-  /* Marketing: Original Soft Yellow */
-  --card-bg-marketing: #FEF9E7;
-  /* Automation: Pale Pearl Aqua */
-  --card-bg-automation: #D8F2F1;
+  /* --- 2. Feature & Telemetry Cards --- */
+  --card-bg-glass-white: rgba(255, 255, 255, 0.88);
+  --card-border-subtle: rgba(255, 255, 255, 0.9);
+  --card-shadow: 0 8px 24px rgba(117, 201, 200, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
 
-  /* Card border tint */
-  --card-border-subtle: rgba(255, 255, 255, 0.6);
-
-  /* --- 3. Highlighting & Interactions --- */
-  /* Primary Accent */
-  --accent-primary: var(--color-pearl-aqua);
-  --accent-primary-hover: #61B7B6;
-  --accent-primary-rgb: var(--color-pearl-aqua-rgb);
-
-  /* Interactive Hover (Buttons/Nav links) */
-  --interactive-hover-bg: rgba(var(--color-wisteria-blue-rgb), 0.16);
-  --interactive-active-bg: rgba(var(--color-wisteria-blue-rgb), 0.28);
+  /* --- 3. Accents & Interactions --- */
+  --accent-primary: #75C9C8;
+  --accent-primary-hover: #5DBDBB;
+  --interactive-hover-bg: rgba(128, 161, 212, 0.16);
 }
 
 /* ==========================================================================
-   Utility & Component Classes
-   ========================================================================== */
-
-/* Page Mesh Background */
-.theme-page-bg {
-  min-height: 100vh;
-  background: var(--page-bg-gradient);
-  background-attachment: fixed;
-}
-
-/* Frosted Glass Main Container */
-.glass-container {
-  background: var(--container-bg-glass);
-  backdrop-filter: blur(var(--container-glass-blur));
-  -webkit-backdrop-filter: blur(var(--container-glass-blur));
-  border: 1px solid var(--container-border-glass);
-  border-radius: 1rem;
-  box-shadow: 0 8px 32px 0 rgba(128, 161, 212, 0.12);
-}
-
-/* Feature Cards */
-.card-management {
-  background-color: var(--card-bg-management);
-  border: 1px solid var(--card-border-subtle);
-}
-
-.card-data-analytics {
-  background-color: var(--card-bg-data-analytics);
-  border: 1px solid var(--card-border-subtle);
-}
-
-.card-crm-automation {
-  background-color: var(--card-bg-crm-automation);
-  border: 1px solid var(--card-border-subtle);
-}
-
-.card-project {
-  background-color: var(--card-bg-project);
-  border: 1px solid var(--card-border-subtle);
-}
-
-.card-marketing {
-  background-color: var(--card-bg-marketing);
-  border: 1px solid var(--card-border-subtle);
-}
-
-.card-automation {
-  background-color: var(--card-bg-automation);
-  border: 1px solid var(--card-border-subtle);
-}
-
-/* Highlighting and Interactive Elements */
-.accent-pearl-aqua,
-.btn-primary {
-  background-color: var(--accent-primary);
-  color: #1A3B3B;
-  transition: background-color 0.2s ease, transform 0.15s ease;
-}
-
-.btn-primary:hover {
-  background-color: var(--accent-primary-hover);
-}
-
-.status-bubble {
-  background-color: var(--accent-primary);
-  color: #133333;
-}
-
-.toggle-switch-active {
-  background-color: var(--accent-primary);
-}
-
-/* Nav links and subtle interactive button hover states */
-.nav-link,
-.btn-subtle {
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.nav-link:hover,
-.btn-subtle:hover {
-  background-color: var(--interactive-hover-bg);
-}
-
-.nav-link:active,
-.btn-subtle:active {
-  background-color: var(--interactive-active-bg);
-}
-
-/* ==========================================================================
-   Restyled Components: Transcript Stream Buffer & Grounded Citations
-   ========================================================================== */
-
-/* 1. Transcript Stream Buffer Container */
-.transcript-buffer-container,
-.stTextArea textarea {
-  background: rgba(247, 244, 234, 0.65) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(192, 185, 221, 0.4) !important;
-  border-radius: 12px !important;
-  color: #1E293B !important; /* Deep Slate (active text) */
-  font-family: 'Consolas', 'Fira Code', monospace !important;
-  font-size: 0.95rem !important;
-  padding: 14px 16px !important;
-  box-shadow: 0 4px 16px 0 rgba(128, 161, 212, 0.08) !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
-}
-
-/* Placeholder styling */
-.transcript-buffer-container::placeholder,
-.stTextArea textarea::placeholder {
-  color: #64748B !important; /* Slate-500 */
-  opacity: 1 !important;
-}
-
-/* Focus state with Pearl Aqua highlight and subtle glow */
-.transcript-buffer-container:focus,
-.transcript-buffer-container:focus-within,
-.stTextArea textarea:focus {
-  outline: none !important;
-  border-color: #75C9C8 !important; /* Pearl Aqua */
-  box-shadow: 0 0 0 3px rgba(117, 201, 200, 0.25), 0 4px 20px 0 rgba(117, 201, 200, 0.2) !important;
-  background: rgba(255, 255, 255, 0.85) !important;
-}
-
-/* 2. Grounded Citations & RRF Results Section Typography */
-.citations-section-header,
-.section-header-contrast {
-  color: #1E293B !important; /* Slate-800 bold */
-  font-weight: 700 !important;
-  font-size: 1.25rem !important;
-  letter-spacing: -0.01em;
-}
-
-.sub-header-contrast {
-  color: #475569 !important; /* Slate-600 semi-bold */
-  font-weight: 600 !important;
-  font-size: 0.95rem !important;
-  margin-top: 0.75rem;
-  margin-bottom: 0.25rem;
-}
-
-.empty-state-text {
-  color: #64748B !important; /* Slate-500 italic */
-  font-style: italic !important;
-  font-size: 0.9rem !important;
-  padding: 12px 0;
-}
-
-/* ==========================================================================
-   Streamlit Specific Layout Overrides
+   Global App & Glass Layout Overrides
    ========================================================================== */
 
 .stApp {
   background: var(--page-bg-gradient) !important;
   background-attachment: fixed !important;
-  color: #2D3748 !important;
+  color: #1E293B !important;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
-/* Custom HUD Header */
+.block-container {
+  padding-top: 2rem !important;
+  padding-bottom: 3rem !important;
+  max-width: 1250px !important;
+}
+
+/* Glassmorphism Column Panels */
+[data-testid="column"] {
+  background: var(--container-bg-glass) !important;
+  backdrop-filter: blur(var(--container-glass-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--container-glass-blur)) !important;
+  border: 1px solid var(--container-border-glass) !important;
+  border-radius: 18px !important;
+  padding: 1.5rem !important;
+  box-shadow: 0 12px 36px 0 rgba(117, 201, 200, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.03) !important;
+}
+
+/* HUD Title */
 .hud-title {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 2.2rem;
-  background: linear-gradient(90deg, #4FA8A7, #5D82BA);
+  font-size: 2.3rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #329998, #4D73B2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 }
 
-/* Live status badge */
+/* Live Status Badge */
 .status-badge {
   display: inline-flex;
   align-items: center;
-  background: rgba(var(--color-pearl-aqua-rgb), 0.2);
-  border: 1px solid var(--color-pearl-aqua);
-  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(117, 201, 200, 0.6);
+  padding: 6px 16px;
   border-radius: 20px;
-  color: #134E4D;
+  color: #0F4C4B;
   font-size: 0.85rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(117, 201, 200, 0.15);
+  margin-bottom: 1.2rem;
 }
 
 .pulse-dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   background-color: var(--color-pearl-aqua);
   border-radius: 50%;
-  margin-right: 8px;
-  box-shadow: 0 0 8px var(--color-pearl-aqua);
-  animation: pulse 1.5s infinite;
+  margin-right: 9px;
+  box-shadow: 0 0 10px var(--color-pearl-aqua);
+  animation: pulse 1.6s infinite;
 }
 
 @keyframes pulse {
   0% { opacity: 0.4; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.2); }
+  50% { opacity: 1; transform: scale(1.25); }
   100% { opacity: 0.4; transform: scale(0.9); }
 }
 
-/* Frosted glass container panel */
-.main-glass-panel {
-  background: var(--container-bg-glass);
-  backdrop-filter: blur(var(--container-glass-blur));
-  -webkit-backdrop-filter: blur(var(--container-glass-blur));
-  border: 1px solid var(--container-border-glass);
-  border-radius: 12px;
-  padding: 1.25rem;
-  box-shadow: 0 8px 32px 0 rgba(128, 161, 212, 0.15);
-  margin-bottom: 1rem;
+/* Section Headers */
+.citations-section-header {
+  color: #1E293B !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 1rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
 }
 
-/* Telemetry cards */
+.sub-header-contrast {
+  color: #475569 !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  margin-top: 0.9rem !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.empty-state-text {
+  color: #64748B !important;
+  font-style: italic !important;
+  font-size: 0.9rem !important;
+  padding: 8px 0 !important;
+}
+
+/* ==========================================================================
+   Input Restyling: Pure White Crisp Backgrounds & Glowing Focus
+   ========================================================================== */
+
+/* Labels */
+[data-testid="stSelectbox"] label,
+[data-testid="stTextArea"] label {
+  color: #334155 !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  margin-bottom: 6px !important;
+}
+
+/* Selectbox Outer & Inner Containers */
+[data-testid="stSelectbox"] > div,
+[data-testid="stSelectbox"] > div > div,
+div[data-baseweb="select"],
+div[data-baseweb="select"] > div {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(192, 185, 221, 0.7) !important;
+  border-radius: 12px !important;
+  color: #1E293B !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03) !important;
+}
+
+div[data-baseweb="select"] * {
+  color: #1E293B !important;
+  fill: #1E293B !important;
+}
+
+/* Dropdown popover menu */
+div[data-baseweb="popover"],
+div[data-baseweb="menu"],
+ul[data-baseweb="menu"] {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(192, 185, 221, 0.7) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+li[role="option"] {
+  color: #1E293B !important;
+  background-color: #FFFFFF !important;
+}
+
+li[role="option"]:hover,
+li[role="option"][aria-selected="true"] {
+  background-color: rgba(117, 201, 200, 0.22) !important;
+  color: #0F3E3D !important;
+}
+
+/* Text Area Container & Input (Replaces dark grey with pure white) */
+[data-baseweb="textarea"],
+[data-baseweb="textarea"] > textarea,
+.stTextArea textarea,
+div[data-baseweb="base-input"] {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  color: #1E293B !important;
+  border: 1px solid rgba(192, 185, 221, 0.7) !important;
+  border-radius: 12px !important;
+  font-family: 'Consolas', 'Fira Code', monospace !important;
+  font-size: 0.95rem !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03) !important;
+  padding: 12px 14px !important;
+}
+
+[data-baseweb="textarea"] > textarea::placeholder,
+.stTextArea textarea::placeholder {
+  color: #64748B !important;
+  opacity: 1 !important;
+}
+
+[data-baseweb="textarea"] > textarea:focus,
+.stTextArea textarea:focus,
+div[data-baseweb="select"]:focus-within {
+  border-color: #75C9C8 !important;
+  box-shadow: 0 0 0 3px rgba(117, 201, 200, 0.3), 0 4px 16px rgba(117, 201, 200, 0.15) !important;
+  outline: none !important;
+}
+
+/* ==========================================================================
+   Buttons, Metrics & Citations
+   ========================================================================== */
+
+/* Button */
+.stButton > button {
+  background: linear-gradient(135deg, #75C9C8 0%, #60B7B6 100%) !important;
+  color: #072E2D !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 12px !important;
+  padding: 0.6rem 1.4rem !important;
+  box-shadow: 0 4px 16px rgba(117, 201, 200, 0.35) !important;
+  transition: all 0.2s ease !important;
+}
+
+.stButton > button:hover {
+  background: linear-gradient(135deg, #80A1D4 0%, #6C92CD 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(128, 161, 212, 0.45) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Metric Cards */
+[data-testid="stMetric"] {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 12px !important;
+  padding: 10px 14px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+}
+
+[data-testid="stMetricLabel"] {
+  color: #64748B !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+}
+
+[data-testid="stMetricValue"] {
+  color: #1E293B !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+}
+
+/* Telemetry & Citation Cards */
 .telemetry-card {
-  background-color: var(--card-bg-project) !important;
+  background: var(--card-bg-glass-white) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   border: 1px solid var(--card-border-subtle) !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   padding: 16px !important;
   margin-bottom: 12px !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+  box-shadow: var(--card-shadow) !important;
 }
 
 .citation-pill {
-  background: var(--color-pearl-aqua) !important;
-  color: #0F3E3D !important;
-  font-weight: 600 !important;
+  background: #75C9C8 !important;
+  color: #072E2D !important;
+  font-weight: 700 !important;
   padding: 4px 10px !important;
   border-radius: 6px !important;
   font-size: 0.82rem !important;
   font-family: monospace !important;
   display: inline-block !important;
-  margin-top: 6px !important;
 }
-
-/* Selectbox styling */
-.stSelectbox > div {
-  background-color: rgba(255, 255, 255, 0.8) !important;
-  border-radius: 8px !important;
-}
-
-/* Button styling with interactive hover */
-.stButton > button {
-  background-color: var(--color-pearl-aqua) !important;
-  color: #0B3332 !important;
-  font-weight: 600 !important;
-  border: 1px solid transparent !important;
-  transition: all 0.2s ease !important;
-}
-
-.stButton > button:hover {
-  background-color: var(--color-wisteria-blue) !important;
-  color: #FFFFFF !important;
-}
-
-
